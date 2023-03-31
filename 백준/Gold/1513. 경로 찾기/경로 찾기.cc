@@ -46,10 +46,7 @@ int main() {
             dp[1][1][1][in[1][1]] = 1;
         for (int j = i; j <= C; j++)
             ans = (ans + get_dp(M, N, i, j)) % MOD;
-        if (i != C)
-            cout << ans << " ";
-        else
-            cout << ans;
+        cout << ans << " ";
     }
     return 0;
 }
