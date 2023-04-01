@@ -47,7 +47,7 @@ int main() {
 			dp[1][1][1][in[1][1]] = 1;
 		for (int j = i; j <= C; j++)
 			ans = (ans + get_dp(M, N, i, j)) % MOD;
-		cout << ans<<" ";
+		cout << ans << " ";
 	}
 	return 0;
 }
