@@ -1,61 +1,67 @@
-#include <stdio.h>
-#include <list>
+#include<iostream>
 #include<cmath>
-#define MAX 1000000
+#include<vector>
+#include<cstring>
 
 using namespace std;
 
-int is_comp[MAX + 1];
+int num[101], tmp[101], N, res=1,res2=0;
+bool isp[1000001];
+vector<int> pv;
 
-int get_prime_cnt(int n,int p)
+void sieve()
 {
-	int cnt=0;
-	while (n % p == 0)
+	memset(isp, true, sizeof(isp));
+	isp[0]=isp[1]=false;
+	for(int i=2;i<=sqrt(1000000);i++)
 	{
-		n /= p;
-		cnt++;
+		if(!isp[i])
+			continue;
+		for(int j=i*2;j<=1000000;j+=i)
+			isp[j]=false;
 	}
-	return cnt;
+	for(int i=2;i<=1000000;i++)
+	{
+		if(isp[i])
+			pv.push_back(i);
+	}
 }
 
 int main()
 {
-	int N;
-	int num[100];
-	list<int*> primes;
-	int score = 1;
-	int cnt = 0;
-
-	scanf("%d", &N);
-	for (int i = 0; i < N; i++)
-		scanf("%d", &num[i]);
-
-	for (int i = 2; i <= MAX; i++)
-		for (int j = i * 2; !is_comp[i] && j <= MAX; j += i)
-			is_comp[j] = true;
-	for (int i = 2; i <= MAX; i++)
-		if (!is_comp[i])
-			primes.push_back(new int[2]{ i, 0 });
-
-	for (int i = 0; i < N; i++)
-		for (int* p : primes)
-			p[1] += get_prime_cnt(num[i], p[0]);
-
-	for (int* p : primes)
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cin>>N;
+	for(int i=1;i<=N;i++)
 	{
-		p[1] /= N;
-		score *= pow(p[0], p[1]);
+		cin>>num[i];
+		tmp[i]=num[i];
 	}
-
-	for (int i = 0; i < N; i++)
+	sieve();
+	for(auto p : pv)
 	{
-		for (int* p : primes)
+		int cnt=0;
+		for(int i=1;i<=N;i++)
 		{
-			int tmp = get_prime_cnt(num[i], p[0]);
-			if (tmp < p[1])
-				cnt += p[1] - tmp;
+			while(num[i]%p==0)
+			{
+				cnt++;
+				num[i]/=p;
+			}
+		}
+		res*=pow(p,cnt/N);
+		for(int i=1;i<=N;i++)
+		{
+			int t=0;
+			while(tmp[i]%p==0)
+			{
+				t++;
+				tmp[i]/=p;
+			}
+			if(cnt/N>t)
+				res2+=cnt/N-t;
 		}
 	}
-
-	printf("%d %d", score, cnt);
+	cout<<res<<' '<<res2;
+	return 0;
 }
