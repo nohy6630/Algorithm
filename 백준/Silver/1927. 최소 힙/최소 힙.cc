@@ -1,18 +1,9 @@
-#include <iostream>
-#include <queue>
+#include<bits/stdc++.h>
 
 using namespace std;
 
-struct cmp
-{
-	bool operator()(int a,int b)
-	{
-		return a>b;	
-	}	
-};
-
+priority_queue<int,vector<int>,greater<int>> PQ;
 int N;
-priority_queue<int, vector<int>, cmp> pq;
 
 int main()
 {
@@ -21,20 +12,19 @@ int main()
 	cin>>N;
 	for(int i=0;i<N;i++)
 	{
-		int a;
-		cin>>a;
-		if(a>0)
-			pq.push(a);
+		int x;
+		cin>>x;
+		if(x!=0)
+			PQ.push(x);
 		else
 		{
-			if(pq.empty())
-				cout<<'0'<<'\n';
+			if(PQ.empty())
+				cout<<0<<'\n';
 			else
 			{
-				cout<<pq.top()<<'\n';
-				pq.pop();		
+				cout<<PQ.top()<<'\n';
+				PQ.pop();
 			}
-		}		
+		}
 	}
-	return 0;
 }
