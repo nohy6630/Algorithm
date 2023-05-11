@@ -11,7 +11,7 @@ ll func(ll a, ll b, ll c) {
 	if (b % 2 == 0)
 		return val * val % c;
 	else
-		return val * val % c * a % c;
+		return val * val % c * a %c;
 }
 
 int main() {
