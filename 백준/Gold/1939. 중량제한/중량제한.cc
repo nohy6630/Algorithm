@@ -1,54 +1,40 @@
-/*
-1. MST를 인접리스트 형태로 만든다.
-2. 공장 출발 노드부터 dfs 또는 bfs로 순회를 하면서 공장 도착 노드까지 도달할때까지의 최대중량을 maxWeight[노드수]에 저장
-3. maxWeight[공장 도착 노드]를 출력 
-*/
-
 #include<bits/stdc++.h>
+#define MAX 10001
+#define X first
+#define Y second
 
 using namespace std;
 
 typedef pair<int,int> pii;
 
-struct Edge
-{
-	int u,v,w;
-};
-
-int parent[100001];
-vector<pii> G[100001];
-int maxWeight[100001];
-bool visited[100001];
-vector<Edge> edges;
 int N,M;
+vector<pii> G[MAX];
+priority_queue<pii> pq;
 int fac[2];
+int weight[MAX];
 
-int find(int x)
+void dijkstra()
 {
-	if(parent[x]==x)
-		return x;
-	else
-		return find(parent[x]);
-}
-
-void unionSet(int a, int b)
-{
-	a=find(a);
-	b=find(b);
-	parent[b]=a;
-}
-
-void dfs(int n,int weight)
-{
-	visited[n]=true;
-	maxWeight[n]=weight;
-	for(pii adj:G[n])
+	fill(weight,weight+MAX,INT_MIN);
+	pq.push({INT_MAX,fac[0]});
+	weight[fac[0]]=INT_MAX;
+	while(!pq.empty())
 	{
-		if(visited[adj.first])
+		pii cur=pq.top();
+		//cout<<"cur={"<<cur.X<<","<<cur.Y<<"}\n";
+		pq.pop();
+		if(weight[cur.Y]>cur.X)
 			continue;
-		dfs(adj.first,min(weight,adj.second));
+		for(auto next:G[cur.Y])
+		{
+			if(min(next.X,cur.X)>weight[next.Y])
+			{
+				weight[next.Y]=min(next.X,cur.X);
+				pq.push({weight[next.Y],next.Y});
+			}
+		}
 	}
-}
+} 
 
 int main()
 {
@@ -59,24 +45,10 @@ int main()
 	{
 		int a,b,c;
 		cin>>a>>b>>c;
-		edges.push_back({a,b,c});
+		G[a].push_back({c,b});
+		G[b].push_back({c,a});
 	}
 	cin>>fac[0]>>fac[1];
-	sort(edges.begin(),edges.end(),[](Edge a, Edge b){
-		return a.w>b.w;
-	});
-	for(int i=1;i<=N;i++)
-		parent[i]=i;
-	for(int i=1;i<=edges.size();i++)
-	{
-		int u=edges[i-1].u,v=edges[i-1].v,w=edges[i-1].w;
-		if(find(u)!=find(v))
-		{
-			unionSet(u,v);
-			G[u].push_back({v,w});
-			G[v].push_back({u,w});
-		}
-	}
-	dfs(fac[0],INT_MAX);
-	cout<<maxWeight[fac[1]];
+	dijkstra();
+	cout<<weight[fac[1]];
 }
