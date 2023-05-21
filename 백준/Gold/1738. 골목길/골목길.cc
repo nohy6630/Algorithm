@@ -52,17 +52,17 @@ int main()
 		G[u].push_back({w,v});
 		revG[v].push_back(u);
 	}
-	queue<int> q;
-	q.push(N);
+	queue<int> Q;
+	Q.push(N);
 	visited[N] = true;
-	while (!q.empty()) {
-		int cidx = q.front();
-		q.pop();
+	while (!Q.empty()) {
+		int cidx = Q.front();
+		Q.pop();
 		for (int i = 0; i < revG[cidx].size(); i++) {
 			int next = revG[cidx][i];
 			if (!visited[next]) {
 				visited[next] = true;
-				q.push(next);
+				Q.push(next);
 			}
 		}
 	}
