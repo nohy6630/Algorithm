@@ -39,7 +39,7 @@ int main()
 	int ans=0;
 	for(int i=1;i<=N;i++)
 	{
-		if(ans<dp[i]+dp2[i]-1)
+		if(ans<dp[i]+dp2[i]-1)//-1하는 이유는 최적해의 경우에 무조건 i번째 숫자를 증가수열 감소수열이 모두 포함하고 있을수 밖에 없기 때문임 
 			ans=dp[i]+dp2[i]-1;
 	}
 	cout<<ans;
