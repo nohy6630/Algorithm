@@ -1,15 +1,15 @@
 #include<bits/stdc++.h>
-#define MAX 53
 
 using namespace std;
 
-int c[MAX][MAX];
-int f[MAX][MAX];
 int N;
-vector<int> G[MAX];
-int p[MAX];
+int c[53][53];
+int f[53][53];
+vector<int> G[53];
+int p[53];
+int ans;
 
-int ctoi(char c)
+char ctoi(char c)
 {
 	if(isupper(c))
 		return c-'A'+1;
@@ -27,27 +27,27 @@ int main()
 		cin>>u>>v>>w;
 		u=ctoi(u);
 		v=ctoi(v);
-		c[u][v]+=w;
-		c[v][u]+=w;
 		G[u].push_back(v);
 		G[v].push_back(u);
+		c[u][v]+=w;
+		c[v][u]+=w;
 	}
-	int ans=0;
 	while(1)
 	{
+		memset(p,false,sizeof(p));
 		queue<int> Q;
-		memset(p,0,sizeof(p));
 		Q.push(1);
+		p[1]=1;
 		while(!Q.empty()&&!p[26])
 		{
 			int u=Q.front();
 			Q.pop();
 			for(int v:G[u])
 			{
-				if(c[u][v]-f[u][v]>0&&!p[v])
+				if(!p[v]&&c[u][v]-f[u][v]>0)
 				{
-					p[v]=u;
 					Q.push(v);
+					p[v]=u;
 				}
 			}
 		}
@@ -55,7 +55,9 @@ int main()
 			break;
 		int flow=INT_MAX;
 		for(int i=26;i!=1;i=p[i])
+		{
 			flow=min(flow,c[p[i]][i]-f[p[i]][i]);
+		}
 		for(int i=26;i!=1;i=p[i])
 		{
 			f[p[i]][i]+=flow;
