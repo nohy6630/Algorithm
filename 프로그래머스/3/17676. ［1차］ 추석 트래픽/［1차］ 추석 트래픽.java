@@ -18,7 +18,6 @@ class Solution {
             matcher.find();
             LocalDateTime endTime = LocalDateTime.parse(matcher.group(1), formatter);
             Double process = Double.parseDouble(matcher.group(2));
-            System.out.println(process);
             end[i] = Duration.between(epoch, endTime).toMillis();
             start[i] = end[i] - (long)(process * 1000) + 1;
         }
