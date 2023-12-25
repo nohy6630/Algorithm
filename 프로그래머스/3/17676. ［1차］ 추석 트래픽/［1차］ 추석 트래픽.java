@@ -6,7 +6,6 @@ import java.time.format.*;
 class Solution {
     long[] start, end;
     Pattern pattern = Pattern.compile("(.*) ([\\d.]*)s");
-    LocalDateTime epoch = LocalDateTime.of(1970, 1, 1, 0, 0);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     
     public int solution(String[] lines) {
@@ -18,7 +17,7 @@ class Solution {
             matcher.find();
             LocalDateTime endTime = LocalDateTime.parse(matcher.group(1), formatter);
             Double process = Double.parseDouble(matcher.group(2));
-            end[i] = Duration.between(epoch, endTime).toMillis();
+            end[i] = endTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
             start[i] = end[i] - (long)(process * 1000) + 1;
         }
         for(int i=0;i<lines.length;i++){
