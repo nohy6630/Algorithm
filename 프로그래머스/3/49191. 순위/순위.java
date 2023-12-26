@@ -11,12 +11,6 @@ class Solution {
         if(wvisited[s][x])
             return;
         wvisited[s][x]=true;
-        if(x<s){
-            for(int i=1;i<=n;i++)
-                if(wvisited[x][i])
-                    wvisited[s][i]=true;
-            return;
-        }
         for(int adj:wG[x])
             dfsWin(s, adj);
     }
@@ -25,12 +19,6 @@ class Solution {
         if(lvisited[s][x])
             return;
         lvisited[s][x]=true;
-        if(x<s){
-            for(int i=1;i<=n;i++)
-                if(lvisited[x][i])
-                    lvisited[s][i]=true;
-            return;
-        }
         for(int adj:lG[x])
             dfsLose(s, adj);
     }
