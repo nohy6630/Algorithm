@@ -1,8 +1,8 @@
 import java.util.*;
 
 class Solution {
-    int[][] dpMin = new int[111][111], dpMax = new int[111][111];
-    int[] sign = new int[111];
+    int[][] dpMin = new int[101][101], dpMax = new int[101][101];
+    int[] sign = new int[101];
     
     public int solution(String arr[]) {
         int idx = 0;
@@ -20,7 +20,7 @@ class Solution {
         for(int d=1; d<idx; d++){
             for(int i=0; i<idx; i++){
                 int j = i + d;
-                if(j > idx)
+                if(j >= idx)
                     continue;
                 dpMax[i][j] = Integer.MIN_VALUE;
                 dpMin[i][j] = Integer.MAX_VALUE;
