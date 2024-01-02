@@ -12,19 +12,19 @@ class Solution {
     }
     
     int chkMakable(long n){
-        int[] arr = new int[100];
-        int idx = 99;
+        int[] arr = new int[63];
+        int idx = 62;
         long tmp = n;
         while(tmp>0){
             arr[idx] = (int)(tmp%2);
             idx--;
             tmp/=2;
         }
-        int digit = (int)Math.pow(2,Math.ceil(Math.log(99-idx+1)/Math.log(2)))-1;
+        int digit = (int)Math.pow(2,Math.ceil(Math.log(62-idx+1)/Math.log(2)))-1;
         int[] binary = new int[digit];
         int cnt = 0;
         for(int i=0;i<digit;i++){
-            binary[i]=arr[99-digit+1+i];
+            binary[i]=arr[62-digit+1+i];
             if(binary[i]==1)
                 cnt++;
         }
