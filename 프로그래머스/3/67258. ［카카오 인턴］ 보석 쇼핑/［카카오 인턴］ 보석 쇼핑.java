@@ -11,16 +11,14 @@ class Solution {
         for(String g : gems)
             types.add(g);
         while(s<gems.length){
-            if(cnt.size()<types.size()){
+            if(cnt.keySet().size()<types.size()){
                 if(e<gems.length){
                     cnt.put(gems[e], cnt.getOrDefault(gems[e], 0) + 1);
                     e++;
                 }
-                else
-                    break;
             }
             else{
-                if(minRange > e-s){
+                if(minRange > e-s+1){
                     minRange = e-s;
                     answer[0] = s+1;
                     answer[1] = e;
