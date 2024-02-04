@@ -22,14 +22,17 @@ public class Main {
         }
         for (int i = 1; i <= n; i++) {
             Queue<Integer> Q = new LinkedList<>();
+            boolean[] visited = new boolean[444];
             Q.add(i);
+            visited[i] = true;
             while (!Q.isEmpty()) {
                 int cur = Q.remove();
                 for (int adj : G[cur]) {
-                    if (!ans[i][adj]) {
-                        ans[i][adj] = true;
-                        Q.add(adj);
-                    }
+                    if (visited[adj])
+                        continue;
+                    visited[adj] = true;
+                    ans[i][adj] = true;
+                    Q.add(adj);
                 }
             }
         }
