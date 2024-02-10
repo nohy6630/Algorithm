@@ -14,7 +14,7 @@ fees as (
     on a.car_type = b.car_type
     where b.duration_type = '30일 이상' and a.car_type in ('세단','SUV')
 )
-select distinct a.car_id, a.car_type, a.fee
+select a.car_id, a.car_type, a.fee
 from fees a join available_cars b
 on a.car_id = b.car_id
 where a.fee between 500000 and 2000000
