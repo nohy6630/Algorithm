@@ -1,30 +1,34 @@
-import java.util.*;
-import java.util.stream.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    int N, S, ans = Integer.MAX_VALUE;
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     StringTokenizer st;
-    int[] num = new int[100001];
+    int n, s;
+    int[] num = new int[111_111];
 
-    void solution() throws IOException {
+    void solution() throws Exception {
         st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        S = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
+        s = Integer.parseInt(st.nextToken());
         st = new StringTokenizer(br.readLine());
-        for (int i = 1; i <= N; i++)
+        for (int i = 0; i < n; i++)
             num[i] = Integer.parseInt(st.nextToken());
-        int start = 1, end = 1, sum = num[1];
-        while (end <= N) {
-            if (sum >= S)
-                ans = Math.min(ans, end - start + 1);
-            if (sum >= S && start < end) {
-                sum -= num[start];
-                start++;
+        int l = 0, r = 0, sum = num[0], ans = Integer.MAX_VALUE;
+        while (l < n) {
+            if (sum >= s)
+                ans = Math.min(ans, r - l + 1);
+            if (r < n - 1) {
+                if (sum >= s) {
+                    sum -= num[l];
+                    l++;
+                } else {
+                    r++;
+                    sum += num[r];
+                }
             } else {
-                end++;
-                sum += num[end];
+                sum -= num[l];
+                l++;
             }
         }
         if (ans == Integer.MAX_VALUE)
@@ -33,7 +37,7 @@ public class Main {
             System.out.println(ans);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         new Main().solution();
     }
 }
