@@ -9,7 +9,7 @@ available_cars as (
     )
 ),
 fees as (
-    select a.car_id, a.car_type, cast(a.daily_fee * 30 * ((100-b.discount_rate)/100) as signed) as fee
+    select a.car_id, a.car_type, round(a.daily_fee * 30 * ((100-b.discount_rate)/100) ) as fee
     from car_rental_company_car a join car_rental_company_discount_plan b
     on a.car_type = b.car_type
     where b.duration_type = '30일 이상' and a.car_type in ('세단','SUV')
